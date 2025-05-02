@@ -1,0 +1,96 @@
+<C-*> = CTRL + *, <S-*> = SHIFT + *, <M-*> = ALT + *
+🎮 Modes
+i        → Insert mode
+I        → Insert at line start
+a        → Append after cursor
+A        → Append at line end
+v        → Visual mode
+V        → Visual line mode
+Ctrl-v   → Visual block mode
+R        → Replace mode
+Esc      → Exit to normal mode
+:        → Command mode
+⌨️ Basic Movement
+h / j / k / l      → Left / down / up / right
+0 / ^ / $          → Line start / first char / end
+w / W              → Next word / WORD
+b / B              → Back word / WORD
+e / E              → End of word / WORD
+gg / G             → Top / bottom of file
+H / M / L          → Top / middle / bottom of screen
+zt / zz / zb       → Scroll line to top / center / bottom
+💾 File Ops
+:w       → Save
+:q       → Quit
+:wq / ZZ → Save and quit
+:q!      → Force quit
+:x       → Save (if changed) + quit
+:e file  → Open file
+:saveas  → Save as new file
+✂️ Editing
+x / X        → Delete char under / before
+dd           → Delete line
+yy           → Yank line
+p / P        → Paste after / before
+u / Ctrl-r   → Undo / Redo
+.            → Repeat last command
+J            → Join lines
+~            → Toggle case
+🔍 Search & Replace
+/pattern     → Forward search
+?pattern     → Backward search
+n / N        → Next / previous match
+:%s/x/y/g    → Replace all x with y
+:noh         → Clear search highlight
+🗂 Buffers & Tabs
+:bn / :bp      → Next / previous buffer
+:bd            → Delete buffer
+:tabnew        → New tab
+gt / gT        → Next / previous tab
+:tabclose      → Close tab
+🧱 Splits
+:sp / :vsp     → Horizontal / vertical split
+Ctrl-w h/j/k/l → Move between splits
+Ctrl-w q       → Close split
+Ctrl-w =       → Equalize splits
+🔍 Telescope (Fuzzy Find)
+<leader> ff   → Find files
+<leader> fw   → Live grep
+<leader> fb   → List buffers
+<leader> fo   → Recent files
+<leader> fz   → Fuzzy find current buffer
+<leader> fh   → Help tags
+<leader> cm   → Git commits
+<leader> gt   → Git status
+📁 NvimTree (File Explorer)
+<C-n>         → Toggle file tree
+<leader> e    → Focus file tree
+a / r / d     → Add / rename / delete
+c / p         → Copy / paste file
+🧠 LSP (Language Server)
+gd            → Go to definition
+gr            → Show references
+K             → Hover docs
+<leader> ca   → Code action
+<leader> rn   → Rename symbol
+<leader> d    → Show diagnostics
+[d / ]d       → Prev / next diagnostic
+<leader> fm   → Format file
+🧪 Terminal (NvTerm)
+<leader> v    → Vertical terminal
+<leader> h    → Horizontal terminal
+<A-v> / <A-h> / <A-i> → Toggle v/h/float terminals
+🧬 Git (Gitsigns)
+<leader> gb   → Git blame
+<leader> ph   → Preview hunk
+<leader> rh   → Reset hunk
+<leader> td   → Toggle deleted
+[c / ]c       → Prev / next hunk
+🎨 Theme & UI
+<leader> th   → Open theme selector
+<leader> ch   → Show NvChad cheatsheet
+<leader> n    → Toggle line numbers
+🔄 Misc
+<Tab>         → Next buffer
+<S-Tab>       → Prev buffer
+<leader> x    → Close buffer
