@@ -15,6 +15,10 @@ curl -LO https://github.com/neovim/neovim/releases/download/v0.10.0/nvim-linux64
 echo "📦 Extracting Neovim..."
 tar xzvf nvim-linux64.tar.gz
 
+# Ensure that the target directory /opt/nvim is empty
+echo "🧹 Cleaning up any previous Neovim files in /opt/nvim..."
+sudo rm -rf /opt/nvim
+
 echo "🚚 Moving Neovim to /opt..."
 sudo mv nvim-linux64 /opt/nvim
 
