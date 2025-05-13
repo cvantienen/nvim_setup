@@ -5,7 +5,7 @@ set -e
 echo "🟢 Updating package list..."
 sudo apt update
 
-echo "📦 Installing required tools..."
+echo "📦 Installing dependencies: curl, tar, unzip, fontconfig..."
 sudo apt install -y curl tar unzip fontconfig
 
 # ========== Neovim Installation ==========
@@ -46,4 +46,18 @@ rm FiraCode.zip
 
 echo "✅ ${FONT_NAME} Nerd Font installed!"
 
-echo "🎉 All done! You can now launch Neovim with 'nvim'"
+# ========== Node.js Installation ==========
+echo "⬇️ Installing Node.js..."
+sudo apt install -y nodejs
+
+echo "✅ Node.js installed:"
+node -v || echo "⚠️ Node.js version check failed"
+
+# ========== Ripgrep Installation ==========
+echo "⬇️ Installing ripgrep..."
+sudo apt install -y ripgrep
+
+echo "✅ ripgrep installed:"
+rg --version | head -n 1 || echo "⚠️ ripgrep version check failed"
+
+echo "🎉 All done! You can now run Neovim using: nvim"
