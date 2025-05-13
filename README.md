@@ -1,30 +1,72 @@
+Here's your cleaned-up and properly formatted `README.md` for your Neovim Chad Configuration:
+
+---
+
 # Neovim Chad Configuration
 
-This is a custom Neovim configuration built using the [NvChad](https://github.com/NvChad/NvChad) framework. To get started, please make sure you have the following dependencies installed and set up:
+This is a custom Neovim configuration built using the [NvChad](https://github.com/NvChad/NvChad) framework.
 
-## Prerequisites:
+## Prerequisites
 
-1. **Neovim**: Install Neovim **version 0.10.0 or above**. You can download it from [here](https://github.com/neovim/neovim/releases/tag/v0.10.0).
+Make sure you have the following dependencies installed:
 
-2. **Copilot for Vim**: Install GitHub Copilot for Neovim. Instructions are available [here](https://github.com/github/copilot.vim).
+1. **Neovim**
+   Install Neovim **version 0.10.0 or above**.
+   [Download Neovim v0.10.0](https://github.com/neovim/neovim/releases/tag/v0.10.0)
 
-3. **Node.js**: Install Node.js, which is required by various plugins. You can install it on Ubuntu using the following command:
+2. **Copilot for Neovim**
+   Install GitHub Copilot for Neovim.
+   [Installation Guide](https://github.com/github/copilot.vim)
+
+3. **Node.js**
+   Required by various plugins.
+   Install on Ubuntu:
+
    ```bash
    sudo apt install nodejs
    ```
 
-4. **Nerd Fonts**: Nerd Fonts are required for proper icon rendering in Neovim. Download them from [here](https://www.nerdfonts.com/).
+4. **Nerd Fonts**
+   Required for proper icon rendering.
+   [Download Nerd Fonts](https://www.nerdfonts.com/)
 
-5. **Ripgrep**: Ripgrep is used for searching files. Install it from [here](https://github.com/BurntSushi/ripgrep).
-   '''bash
-      sudo apt-get install ripgrep
-   '''
+5. **Ripgrep**
+   Used for searching files.
+   Install on Ubuntu:
+
+   ```bash
+   sudo apt-get install ripgrep
+   ```
+
+## Setup Instructions
+
+After opening Neovim for the first time:
+
+1. Wait for `lazy.nvim` to finish downloading and syncing plugins.
+2. Run the following command inside Neovim to install required tools:
+
+   ```
+   :MasonInstallAll
+   ```
+3. Delete the `.git` folder from the `nvim` config directory:
+
+   ```bash
+   rm -rf ~/.config/nvim/.git
+   ```
+4. Learn about UI and Base46 customization by running:
+
+   ```
+   :h nvui
+   ```
 
 ## Key Mappings Cheat Sheet
 
-Copilot:
-KeyCombination
-C-l		Autocomplete Accpet 
+### GitHub Copilot
+
+| Key Combination | Action              |
+| --------------- | ------------------- |
+| `Ctrl + l`      | Accept autocomplete |
+
 ### **Normal Mode Key Mappings**
 
 #### **Window Navigation**:
