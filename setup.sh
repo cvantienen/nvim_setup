@@ -50,12 +50,26 @@ rm FiraCode.zip
 
 echo "✅ ${FONT_NAME} Nerd Font installed!"
 
-# ========== Node.js Installation ==========
-echo "⬇️ Installing Node.js..."
-sudo apt install -y nodejs npm
+# ========== Install Node.js using nvm ==========
+echo "⬇️ Installing Node Version Manager (nvm)..."
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+
+# Load nvm into the current shell session
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# Install the latest Node.js LTS version
+echo "⬇️ Installing the latest Node.js version using nvm..."
+nvm install node
+
+# Set the installed version as default
+nvm alias default node
 
 echo "✅ Node.js installed:"
 node -v || echo "⚠️ Node.js version check failed"
+
+echo "✅ npm installed:"
+npm -v || echo "⚠️ npm version check failed"
 
 # ========== Ripgrep Installation ==========
 echo "⬇️ Installing ripgrep..."
