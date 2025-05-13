@@ -60,4 +60,11 @@ sudo apt install -y ripgrep
 echo "✅ ripgrep installed:"
 rg --version | head -n 1 || echo "⚠️ ripgrep version check failed"
 
-echo "🎉 All done! You can now run Neovim using: nvim"
+# ========== Copy Custom Neovim Config ==========
+echo "📁 Copying custom Neovim config from /root/nvim_setup/nvim_copy to ~/.config/nvim..."
+mkdir -p ~/.config/nvim
+cp -r /root/nvim_setup/nvim_copy/* ~/.config/nvim/
+
+echo "✅ Custom Neovim configuration installed!"
+
+echo "🎉 All done! Launch Neovim using: nvim"
