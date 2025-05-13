@@ -48,7 +48,7 @@ echo "✅ ${FONT_NAME} Nerd Font installed!"
 
 # ========== Node.js Installation ==========
 echo "⬇️ Installing Node.js..."
-sudo apt install -y nodejs
+sudo apt install -y nodejs npm
 
 echo "✅ Node.js installed:"
 node -v || echo "⚠️ Node.js version check failed"
