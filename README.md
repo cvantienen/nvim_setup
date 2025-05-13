@@ -4,7 +4,7 @@ This is a custom Neovim configuration built using the [NvChad](https://github.co
 
 ## Prerequisites:
 
-1. **Neovim**: Install Neovim version 0.10.0 or above. You can download it from [here](https://github.com/neovim/neovim/releases/tag/v0.10.0).
+1. **Neovim**: Install Neovim **version 0.10.0 or above**. You can download it from [here](https://github.com/neovim/neovim/releases/tag/v0.10.0).
 
 2. **Copilot for Vim**: Install GitHub Copilot for Neovim. Instructions are available [here](https://github.com/github/copilot.vim).
 
@@ -16,6 +16,9 @@ This is a custom Neovim configuration built using the [NvChad](https://github.co
 4. **Nerd Fonts**: Nerd Fonts are required for proper icon rendering in Neovim. Download them from [here](https://www.nerdfonts.com/).
 
 5. **Ripgrep**: Ripgrep is used for searching files. Install it from [here](https://github.com/BurntSushi/ripgrep).
+   '''bash
+      sudo apt-get install ripgrep
+   '''
 
 ## Key Mappings Cheat Sheet
 
