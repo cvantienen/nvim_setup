@@ -58,18 +58,29 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-# Install the latest Node.js LTS version
+# Install the latest Node.js version
 echo "⬇️ Installing the latest Node.js version using nvm..."
 nvm install node
 
 # Set the installed version as default
 nvm alias default node
 
-echo "✅ Node.js installed:"
-node -v || echo "⚠️ Node.js version check failed"
+# ========== Verify Node.js and npm Installation ==========
+echo "✅ Node.js version:"
+node -v
 
-echo "✅ npm installed:"
-npm -v || echo "⚠️ npm version check failed"
+echo "✅ npm version:"
+npm -v || echo "⚠️ npm installation failed!"
+
+# ========== Install Latest npm (if necessary) ==========
+if ! command -v npm &>/dev/null; then
+  echo "⚠️ npm not found, installing the latest npm..."
+  nvm install-latest-npm
+  echo "✅ npm installed:"
+  npm -v
+fi
+
+echo "🎉 All done! Node.js and npm are installed."
 
 # ========== Ripgrep Installation ==========
 echo "⬇️ Installing ripgrep..."
