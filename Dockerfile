@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y \
     curl \
     git \
     ripgrep \
-    nodejs \
     npm \
     python3 \
     python3-pip \
@@ -18,12 +17,19 @@ RUN apt-get update && apt-get install -y \
     xz-utils \
     && apt-get clean
 
+  
+# Install the latest Node.js (from NodeSource)
+RUN curl -o- https://fnm.vercel.app/install | bash && \
+    apt-get install -y nodejs && \
+    apt-get clean
+  
 # Download and install the latest Neovim pre-release AppImage
 RUN curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.appimage && \
     chmod u+x nvim-linux-x86_64.appimage && \
     ./nvim-linux-x86_64.appimage --appimage-extract && \
     mv squashfs-root /nvim && \
     ln -s /nvim/AppRun /usr/bin/nvim
+    
 
 # Check the version (should show v0.12.0-dev...)
 RUN nvim --version
@@ -32,7 +38,7 @@ RUN nvim --version
 RUN git clone https://github.com/cvantienen/nvim_setup.git /nvim_setup
 
 # Copy the personal Neovim configuration into the container
-RUN mkdir -p /root/.config/nvim && cp -r /nvim_setup/nvim_copy/* /root/.config/nvim/
+RUN mkdir -p /root/.config/nvim && cp -r /nvim_setup/.config/* /root/.config/nvim/
 
 # Install Neovim Python dependencies
 RUN pip3 install pynvim
