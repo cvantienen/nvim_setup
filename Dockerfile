@@ -8,7 +8,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     curl \
     git \
-    neovim \
     ripgrep \
     nodejs \
     npm \
@@ -16,13 +15,24 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     python3-venv \
     unzip \
+    xz-utils \
     && apt-get clean
+
+# Install latest Neovim AppImage and extract it
+RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage && \
+    chmod u+x nvim.appimage && \
+    ./nvim.appimage --appimage-extract && \
+    mv squashfs-root /nvim && \
+    ln -s /nvim/AppRun /usr/bin/nvim
+
+# Verify correct version is installed
+RUN nvim --version
 
 # Clone your repository containing the personal Neovim config
 RUN git clone https://github.com/cvantienen/nvim_setup.git /nvim_setup
 
 # Copy the personal Neovim configuration from the repository
-RUN mkdir -p ~/.config/nvim && cp -r /nvim_setup/nvim_copy/* ~/.config/nvim/
+RUN mkdir -p /root/.config/nvim && cp -r /nvim_setup/nvim_copy/* /root/.config/nvim/
 
 # Install Neovim Python dependencies
 RUN pip3 install pynvim
