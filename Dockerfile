@@ -18,8 +18,11 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && apt-get clean
 
-# Install NVChad
-RUN git clone https://github.com/NvChad/NvChad.git ~/.config/nvim --depth 1
+# Clone your repository containing the personal Neovim config
+RUN git clone https://github.com/cvantienen/nvim_setup.git /nvim_setup
+
+# Copy the personal Neovim configuration from the repository
+RUN mkdir -p ~/.config/nvim && cp -r /nvim_setup/nvim_copy/* ~/.config/nvim/
 
 # Install Neovim Python dependencies
 RUN pip3 install pynvim
