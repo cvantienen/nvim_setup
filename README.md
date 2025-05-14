@@ -58,15 +58,7 @@ Set up your custom Neovim configuration in just a few steps:
 
 ## 🐳 Running Inside a Docker Container
 
-You can run your Neovim configuration inside a Docker container. Use the following commands:
-
-### Mount a Repository for Editing
-To work on a specific repository:
-```bash
-docker run -it -v /path/to/your/repo:/workspace my-nvim-config
-```
-
-### Mount Multiple Directories
+## Mount Multiple Directories
 To include additional configuration files:
 ```bash
 docker run -it -v /path/to/your/repo:/workspace -v /path/to/another/dir:/another-dir my-nvim-config
