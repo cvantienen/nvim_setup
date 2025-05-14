@@ -49,3 +49,16 @@ All that is needed is to clone repo and Run:
    ```
    :h nvui
    ```
+
+Running
+If you want to mount multiple directories (e.g., for additional config files), you can use multiple -v flags:
+
+bash
+docker run -it -v /path/to/your/repo:/workspace -v /path/to/another/dir:/another-dir my-nvim-config
+If you want to persist your NVChad configuration as well (e.g., for saving plugin settings), mount your configuration directory:
+
+bash
+docker run -it -v ~/.config/nvim:/root/.config/nvim -v /path/to/your/repo:/workspace my-nvim-config
+Always ensure the paths you mount are accessible by Docker (on Windows, ensure the paths are shared in Docker Desktop > Settings > Resources > File Sharing).
+
+Let me know if you need further clarification!
