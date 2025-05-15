@@ -1,43 +1,60 @@
-# Use Alpine Edge as the base image
-FROM alpine:edge
+FROM python:3.12-slim-bookworm
 
-# Set the working directory
 WORKDIR /root
 
-# Set environment variables to avoid interactive prompts
 ENV TERM=xterm-256color \
     DEBIAN_FRONTEND=noninteractive
 
-# Install required dependencies
-RUN apk add --no-cache \
-    git \
-    nodejs \
-    npm \
-    python3 \
-    py3-pip \
-    py3-virtualenv \
-    curl \
-    ripgrep \
-    unzip \
-    xz && \
-    pip3 install --upgrade pip && \
-    npm install -g neovim
+# Install dependencies and Node.js (latest LTS) using NodeSource
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        curl \
+        git \
+        build-essential \
+        libtool \
+        autoconf \
+        automake \
+        cmake \
+        pkg-config \
+        gettext \
+        unzip \
+        libncurses5-dev \
+        libncursesw5-dev \
+        libffi-dev \
+        libssl-dev \
+        liblzma-dev \
+        libbz2-dev && \
+    curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
+    apt-get install -y --no-install-recommends nodejs fuse && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install the latest Neovim pre-release AppImage
-RUN curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.appimage && \
+RUN pip install --upgrade pip && \
+    pip install pynvim
+
+RUN npm install -g neovim
+
+RUN curl -LO https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-linux-x86_64.appimage && \
     chmod u+x nvim-linux-x86_64.appimage && \
     ./nvim-linux-x86_64.appimage --appimage-extract && \
     mv squashfs-root /nvim && \
-    ln -s /nvim/AppRun /usr/bin/nvim
+    ln -sf /nvim/AppRun /usr/bin/nvim && \
+    rm nvim-linux-x86_64.appimage
 
-# Clone your custom Neovim config
-RUN git clone https://github.com/cvantienen/nvim_setup.git /nvim_setup
+RUN git clone https://github.com/cvantienen/nvim_setup.git /root/nvim_setup
 
-# Copy the custom Neovim configuration into the container
-RUN mkdir -p /root/.config/nvim && cp -r /nvim_setup/.config/* /root/.config/nvim/
+RUN mkdir -p /.config && \
+    cp -r /root/nvim_setup/.config/. /.config/
 
-# Install Neovim Python dependencies
-RUN pip3 install pynvim
 
-# Set Neovim as the default command
+RUN echo "== Installed versions ==" && \
+    python3 --version && \
+    pip --version && \
+    node --version && \
+    npm --version && \
+    nvim --version && \
+    git --version && \
+    echo "========================"
+
 CMD ["nvim"]
+
