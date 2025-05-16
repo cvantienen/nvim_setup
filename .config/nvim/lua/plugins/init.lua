@@ -55,4 +55,27 @@ return {
   -- Additional utilities
   { "folke/trouble.nvim" }, -- Better diagnostics UI
   { "mfussenegger/nvim-dap-python" }, -- Python debugging with DAP
-}
+  -- lazy.nvim
+  {
+      "robitx/gp.nvim",
+      config = function()
+          local conf = {
+              providers = {
+                  copilot = {
+                      disable = false,
+                      endpoint = "https://api.githubcopilot.com/chat/completions",
+                      secret = {
+                          "bash",
+                          "-c",
+                          "cat ~/.config/github-copilot/apps.json | sed -e 's/.*oauth_token...//;s/\".*//'"
+                      },
+                  },
+                  openai = {}, -- disables OpenAI if you don't want it
+              },
+              default_chat_agent = "ChatCopilot",
+              default_command_agent = "CodeCopilot",
+          }
+          require("gp").setup(conf)
+          vim.keymap.set({"n", "i"}, "<C-g>c", "<cmd>GpChatNew<cr>", { desc = "New Copilot Chat" })
+      end,
+  }
