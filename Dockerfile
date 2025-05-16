@@ -51,8 +51,23 @@ RUN curl -LO https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-lin
 
 RUN git clone https://github.com/cvantienen/nvim_setup.git 
 
-RUN mkdir -p /root/.config && \
-    cp -r /root/nvim_setup/.config/. /root/.config/
+# Copy the .config folder from the repo into /root/.config
+RUN cp -r /root/nvim_setup/.config /root/.config
+
+ # Run Lazy.nvim sync and wait for plugin install to complete
+RUN nvim --headless \
+    "+Lazy! sync" \
+    "+lua require('lazy').sync()" \
+    "+sleep 5" \
+    "+qa"
+
+# Run MasonInstallAll and wait for it to finish
+RUN nvim --headless \
+    "+lua require('mason-tool-installer').install()" \
+    "+sleep 5" \
+    "+qa"
+    
+COPY .config /root/.config
 
 COPY version.sh /version.sh
 RUN chmod +x /version.sh
