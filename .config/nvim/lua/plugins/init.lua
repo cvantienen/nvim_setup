@@ -5,40 +5,36 @@ return {
     opts = require "configs.conform",
   },
 
-  -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",
     config = function()
       require "configs.lspconfig"
     end,
   },
-  
+
   {
     "github/copilot.vim",
     lazy = false,
-    config = function()  -- Mapping tab is already used by NvChad
-      vim.g.copilot_no_tab_map = true;
-      vim.g.copilot_assume_mapped = true;
-      vim.g.copilot_tab_fallback = "";
-    -- The mapping is set to other key, see custom/lua/mappings
-    -- or run <leader>ch to see copilot mapping section
+    config = function()
+      vim.g.copilot_no_tab_map = true
+      vim.g.copilot_assume_mapped = true
+      vim.g.copilot_tab_fallback = ""
     end
   },
 
-   -- LSP and Python/Django support
-  { "neovim/nvim-lspconfig" }, -- LSP support
-  { "williamboman/mason.nvim" }, -- Manage LSP servers, linters, and formatters
-  { "williamboman/mason-lspconfig.nvim" }, -- Bridge Mason and LSPConfig
-  { "jose-elias-alvarez/null-ls.nvim" }, -- Formatters and linters
-  { "mfussenegger/nvim-dap" }, -- Debugging tools
+  -- LSP and Python/Django support
+  { "williamboman/mason.nvim" },
+  { "williamboman/mason-lspconfig.nvim" },
+  { "jose-elias-alvarez/null-ls.nvim" },
+  { "mfussenegger/nvim-dap" },
 
   -- Python-specific plugins
-  { "Vimjas/vim-python-pep8-indent" }, -- PEP8 indentation for Python
-  { "tmhedberg/SimpylFold" }, -- Python code folding
+  { "Vimjas/vim-python-pep8-indent" },
+  { "tmhedberg/SimpylFold" },
 
   -- Docker and YAML support
-  { "ekalinin/Dockerfile.vim" }, -- Dockerfile syntax highlighting
-  { "cuducos/yaml.nvim" }, -- YAML enhancements
+  { "ekalinin/Dockerfile.vim" },
+  { "cuducos/yaml.nvim" },
 
   -- Treesitter for syntax highlighting
   { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
@@ -47,35 +43,36 @@ return {
   { "nvim-telescope/telescope.nvim", dependencies = "nvim-lua/plenary.nvim" },
 
   -- Snippet support
-  { "L3MON4D3/LuaSnip" }, -- Snippet engine
-  { "saadparwaiz1/cmp_luasnip" }, -- Snippet completions
-  { "hrsh7th/nvim-cmp" }, -- Autocompletion
-  { "hrsh7th/cmp-nvim-lsp" }, -- LSP completions
+  { "L3MON4D3/LuaSnip" },
+  { "saadparwaiz1/cmp_luasnip" },
+  { "hrsh7th/nvim-cmp" },
+  { "hrsh7th/cmp-nvim-lsp" },
 
   -- Additional utilities
-  { "folke/trouble.nvim" }, -- Better diagnostics UI
-  { "mfussenegger/nvim-dap-python" }, -- Python debugging with DAP
-  -- lazy.nvim
+  { "folke/trouble.nvim" },
+  { "mfussenegger/nvim-dap-python" },
+
   {
-      "robitx/gp.nvim",
-      config = function()
-          local conf = {
-              providers = {
-                  copilot = {
-                      disable = false,
-                      endpoint = "https://api.githubcopilot.com/chat/completions",
-                      secret = {
-                          "bash",
-                          "-c",
-                          "cat ~/.config/github-copilot/apps.json | sed -e 's/.*oauth_token...//;s/\".*//'"
-                      },
-                  },
-                  openai = {}, -- disables OpenAI if you don't want it
-              },
-              default_chat_agent = "ChatCopilot",
-              default_command_agent = "CodeCopilot",
-          }
-          require("gp").setup(conf)
-          vim.keymap.set({"n", "i"}, "<C-g>c", "<cmd>GpChatNew<cr>", { desc = "New Copilot Chat" })
-      end,
+    "robitx/gp.nvim",
+    config = function()
+      local conf = {
+        providers = {
+          copilot = {
+            disable = false,
+            endpoint = "https://api.githubcopilot.com/chat/completions",
+            secret = {
+              "bash",
+              "-c",
+              "cat ~/.config/github-copilot/apps.json | sed -e 's/.*oauth_token...//;s/\".*//'"
+            },
+          },
+          openai = {},
+        },
+        default_chat_agent = "ChatCopilot",
+        default_command_agent = "CodeCopilot",
+      }
+      require("gp").setup(conf)
+      vim.keymap.set({"n", "i"}, "<C-g>c", "<cmd>GpChatNew<cr>", { desc = "New Copilot Chat" })
+    end,
   }
+}
