@@ -34,11 +34,11 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Download and install a single Nerd Font (DroidSansMNerdFont-Regular.otf)
-RUN mkdir -p ~/.local/share/fonts && \
-    cd ~/.local/share/fonts && \
-    curl -fLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/DroidSansMono/DroidSansMNerdFont-Regular.otf && \
-    fc-cache -fv 
+# Clone nerd-fonts repo and install only the Hack font
+RUN git clone --depth=1 https://github.com/ryanoasis/nerd-fonts.git /tmp/nerd-fonts && \
+    /tmp/nerd-fonts/install.sh Hack && \
+    rm -rf /tmp/nerd-fonts && \
+    fc-cache -fv
 
 RUN curl -LO https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-linux-x86_64.appimage && \
     chmod u+x nvim-linux-x86_64.appimage && \
