@@ -19,6 +19,7 @@ RUN apk add --no-cache \
     unzip \
     build-base \
     fontconfig \
+    font-hack-nerd \
     stylua \
     py3-lsp-server \
     py3-isort \
