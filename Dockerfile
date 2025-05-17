@@ -21,6 +21,19 @@ RUN apt-get update && \
         gettext \
         unzip \
         sox \
+        wget \
+        tar \
+        python3-pip \
+        python3-setuptools \
+        python3-wheel \
+        xclip \
+        fd-find \
+        jq \
+        luarocks \
+        npm \
+        fzf \
+        zsh \
+        npm \
         fontconfig \
         libsox-fmt-mp3 \
         libncurses5-dev \
@@ -33,12 +46,6 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends nodejs fuse && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-# Clone nerd-fonts repo and install only the Hack font
-RUN git clone --depth=1 https://github.com/ryanoasis/nerd-fonts.git /tmp/nerd-fonts && \
-    /tmp/nerd-fonts/install.sh Hack && \
-    rm -rf /tmp/nerd-fonts && \
-    fc-cache -fv
 
 RUN curl -LO https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-linux-x86_64.appimage && \
     chmod u+x nvim-linux-x86_64.appimage && \
@@ -65,7 +72,13 @@ RUN cp /root/nvim_setup/nvim/init.lua /root/.config/nvim/ && \
     cp /root/nvim_setup/nvim/README.md /root/.config/nvim/ && \
     cp -r /root/nvim_setup/nvim/lua /root/.config/nvim/ && \
     cp -r /root/nvim_setup/nvim/pack /root/.config/nvim/
- 
+
+# Clone nerd-fonts repo and install only the Hack font
+RUN git clone --depth=1 https://github.com/ryanoasis/nerd-fonts.git /tmp/nerd-fonts && \
+    /tmp/nerd-fonts/install.sh Hack && \
+    rm -rf /tmp/nerd-fonts && \
+    fc-cache -fv
+
 
 CMD ["nvim"]
 
