@@ -40,7 +40,6 @@ RUN curl -LO https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-lin
     ln -sf /nvim/AppRun /usr/bin/nvim && \
     rm nvim-linux-x86_64.appimage 
 
-
 # Copy and install dev requirements
 COPY dev_requirements.txt /root/dev_requirements.txt
 
@@ -48,14 +47,19 @@ RUN pip install --upgrade pip && \
     pip install -r /root/dev_requirements.txt
 
 RUN git clone --depth=1 https://github.com/github/copilot.vim.git \
-  ~/.vim/pack/github/start/copilot.vim
+  ~/.config/nvim/pack/github/start/copilot.vim
 
 RUN git clone https://github.com/cvantienen/nvim_setup.git 
 
-# Copy the .config folder from the repo into /root/.config
-RUN cp -r /root/nvim_setup/nvim/ /root/.config/nvim
-
- # Run Lazy.nvim sync and wait for plugin install to complete
+# Copy individual config files and folders
+RUN cp /root/nvim_setup/nvim/init.lua /root/.config/nvim/ && \
+    cp /root/nvim_setup/nvim/lazy-lock.json /root/.config/nvim/ && \
+    cp /root/nvim_setup/nvim/LICENSE /root/.config/nvim/ && \
+    cp /root/nvim_setup/nvim/README.md /root/.config/nvim/ && \
+    cp -r /root/nvim_setup/nvim/lua /root/.config/nvim/ && \
+    cp -r /root/nvim_setup/nvim/pack /root/.config/nvim/
+ 
+# Run Lazy.nvim sync and wait for plugin install to complete
 RUN nvim --headless \
     "+Lazy! sync" \
     "+lua require('lazy').sync()" \
