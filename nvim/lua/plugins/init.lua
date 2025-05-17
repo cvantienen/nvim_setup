@@ -1,7 +1,7 @@
 return {
   {
     "stevearc/conform.nvim",
-    -- event = 'BufWritePre', -- uncomment for format on save
+    event = 'BufWritePre',
     opts = require "configs.conform",
   },
 
@@ -11,6 +11,36 @@ return {
     config = function()
       require "configs.lspconfig"
     end,
+  },
+
+  {
+   "williamboman/mason.nvim",
+   opts = {
+    ensure_installed = {
+      "lua-language-server",
+      "stylua",
+      "html-lsp",
+      "css-lsp",
+      "prettier",
+      "black",
+      "ruff",
+    },
+   },
+  },
+  
+  {
+   "nvim-treesitter/nvim-treesitter",
+   opts = {
+    ensure_installed = {
+      "vim",
+      "lua",
+      "vimdoc",
+      "html",
+      "css",
+      "python",
+      
+    },
+   },
   },
   
   {
@@ -24,4 +54,17 @@ return {
     -- or run <leader>ch to see copilot mapping section
     end
   },
+    {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    dependencies = {
+      { "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
+      { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+    },
+    build = "make tiktoken", -- Only on MacOS or Linux
+    opts = {
+      -- See Configuration section for options
+    },
+    -- See Commands section for default commands if you want to lazy load on them
+  },
+
 }

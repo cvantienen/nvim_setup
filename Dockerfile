@@ -15,6 +15,7 @@ RUN apt-get update && \
         libtool \
         autoconf \
         automake \
+        ripgrep \
         cmake \
         pkg-config \
         gettext \
@@ -32,27 +33,27 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install --upgrade pip && \
-    pip install pynvim
-
-# Copy and install dev requirements
-COPY dev_requirements.txt /root/dev_requirements.txt
-RUN pip install --upgrade pip && \
-    pip install -r /root/dev_requirements.txt
-
-RUN npm install -g neovim
-
 RUN curl -LO https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-linux-x86_64.appimage && \
     chmod u+x nvim-linux-x86_64.appimage && \
     ./nvim-linux-x86_64.appimage --appimage-extract && \
     mv squashfs-root /nvim && \
     ln -sf /nvim/AppRun /usr/bin/nvim && \
-    rm nvim-linux-x86_64.appimage
+    rm nvim-linux-x86_64.appimage 
+
+
+# Copy and install dev requirements
+COPY dev_requirements.txt /root/dev_requirements.txt
+
+RUN pip install --upgrade pip && \
+    pip install -r /root/dev_requirements.txt
+
+RUN git clone --depth=1 https://github.com/github/copilot.vim.git \
+  ~/.vim/pack/github/start/copilot.vim
 
 RUN git clone https://github.com/cvantienen/nvim_setup.git 
 
 # Copy the .config folder from the repo into /root/.config
-RUN cp -r /root/nvim_setup/.config /root/.config
+RUN cp -r /root/nvim_setup/nvim/ /root/.config/nvim
 
  # Run Lazy.nvim sync and wait for plugin install to complete
 RUN nvim --headless \
@@ -66,12 +67,6 @@ RUN nvim --headless \
     "+lua require('mason-tool-installer').install()" \
     "+sleep 5" \
     "+qa"
-    
-COPY .config /root/.config
-
-COPY version.sh /version.sh
-RUN chmod +x /version.sh
-ENTRYPOINT ["/version.sh"]
 
 CMD ["nvim"]
 
