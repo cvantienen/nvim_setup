@@ -35,12 +35,11 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Download and install the latest FiraCode Nerd Font
-RUN curl -LO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip
-RUN unzip FiraCode.zip && \
-    mkdir -p ~/.local/share/fonts && \
-    unzip FiraCode.zip -d ~/.local/share/fonts/FiraCode && \
-    fc-cache -fv && \
-    rm FiraCode.zip
+# Download and install a single Nerd Font (DroidSansMNerdFont-Regular.otf)
+RUN mkdir -p ~/.local/share/fonts && \
+    cd ~/.local/share/fonts && \
+    curl -fLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/DroidSansMono/Regular/DroidSansMNerdFont-Regular.otf && \
+    fc-cache -fv
 
 RUN curl -LO https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-linux-x86_64.appimage && \
     chmod u+x nvim-linux-x86_64.appimage && \
@@ -78,6 +77,12 @@ RUN nvim --headless \
 # Run MasonInstallAll and wait for it to finish
 RUN nvim --headless \
     "+lua require('mason-tool-installer').install()" \
+    "+sleep 5" \
+    "+qa"
+
+# Install Treesitter parsers
+RUN nvim --headless \
+    "+lua require('nvim-treesitter.install').update({ with_sync = true })" \
     "+sleep 5" \
     "+qa"
 
