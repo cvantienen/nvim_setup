@@ -19,7 +19,6 @@ RUN apk add --no-cache \
     unzip \
     build-base \
     fontconfig \
-    font-hack-nerd \
     stylua \
     py3-lsp-server \
     py3-isort \
@@ -56,6 +55,8 @@ RUN mkdir -p /root/.config/nvim && \
 # Add GitHub Copilot plugin
 RUN git clone --depth=1 https://github.com/github/copilot.vim.git \
     /root/.config/nvim/pack/github/start/copilot.vim
+
+RUN add --no-cache font-hack-nerd
 
 # Preinstall Neovim plugins, Mason tools, and Treesitter parsers
 RUN nvim --headless \
