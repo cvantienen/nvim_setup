@@ -11,11 +11,9 @@ debugpy               # Debugging support (e.g. VSCode, DAP)
 
 # LSP / Editor integration
 pynvim                # Required for Python support in Neovim
-pytho
+python-lsp-server[all]
 
-# Testing
 pytest
-pytest-django
 factory-boy           # Fixtures for tests
 
 # Project/tooling

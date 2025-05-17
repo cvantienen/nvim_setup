@@ -84,9 +84,6 @@ RUN apk add --no-cache zsh && \
     sed -i 's/plugins=(.*)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc && \
     sed -i 's/^export ZSH=.*$/export ZSH=\/root\/.oh-my-zsh/' ~/.zshrc
 
-
-# Set default shell to zsh
-RUN chsh -s $(which zsh)
 # Set the default command to run when starting the container
 
 CMD ["nvim"]
