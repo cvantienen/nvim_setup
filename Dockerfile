@@ -21,6 +21,7 @@ RUN apt-get update && \
         gettext \
         unzip \
         sox \
+        fontconfig \
         libsox-fmt-mp3 \
         libncurses5-dev \
         libncursesw5-dev \
