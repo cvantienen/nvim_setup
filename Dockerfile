@@ -34,7 +34,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Download and install the latest FiraCode Nerd Font
-RUN wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip && \
+RUN wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip
+RUN unzip FiraCode.zip && \
     mkdir -p ~/.local/share/fonts && \
     unzip FiraCode.zip -d ~/.local/share/fonts/FiraCode && \
     fc-cache -fv && \
