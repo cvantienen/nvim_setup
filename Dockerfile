@@ -33,6 +33,13 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Download and install the latest FiraCode Nerd Font
+RUN wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip && \
+    mkdir -p ~/.local/share/fonts && \
+    unzip FiraCode.zip -d ~/.local/share/fonts/FiraCode && \
+    fc-cache -fv && \
+    rm FiraCode.zip
+
 RUN curl -LO https://github.com/neovim/neovim/releases/download/v0.11.1/nvim-linux-x86_64.appimage && \
     chmod u+x nvim-linux-x86_64.appimage && \
     ./nvim-linux-x86_64.appimage --appimage-extract && \
