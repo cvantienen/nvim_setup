@@ -6,6 +6,8 @@ WORKDIR /root
 ENV TERM=xterm-256color \
     DEBIAN_FRONTEND=noninteractive
 
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - 
+
 # Install dependencies and Node.js (latest LTS) using NodeSource
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -42,8 +44,6 @@ RUN apt-get update && \
         libssl-dev \
         liblzma-dev \
         libbz2-dev && \
-    curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
-    apt-get install -y --no-install-recommends nodejs fuse && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -78,6 +78,15 @@ RUN git clone --depth=1 https://github.com/ryanoasis/nerd-fonts.git /tmp/nerd-fo
     /tmp/nerd-fonts/install.sh Hack && \
     rm -rf /tmp/nerd-fonts && \
     fc-cache -fv
+
+    # Install Neovim plugins, LSPs, and Treesitter parsers
+RUN nvim --headless \
+    "+Lazy! sync" \
+    "+lua require('lazy').sync()" \
+    "+lua require('mason-tool-installer').install()" \
+    "+lua require('nvim-treesitter.install').update({ with_sync = true })" \
+    "+sleep 15" \
+    "+qa"
 
 
 CMD ["nvim"]
