@@ -66,21 +66,6 @@ RUN nvim --headless \
     "+sleep 5" \
     "+qa"
 
-# Install Hack Nerd Font system-wide for icon support (minimal download)
-RUN mkdir -p /usr/share/fonts/nerd-fonts && \
-    cd /usr/share/fonts/nerd-fonts && \
-    wget -q https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip && \
-    unzip -q Hack.zip -d Hack && \
-    find Hack -type f -name "*.ttf" -exec mv {} . \; && \
-    rm -rf Hack Hack.zip && \
-    fc-cache -fv
-
-# install ohmy-zsh
-RUN apk add --no-cache zsh && \
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
-    sed -i 's/ZSH_THEME=".*"/ZSH_THEME="agnoster"/' ~/.zshrc && \
-    sed -i 's/plugins=(.*)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc && \
-    sed -i 's/^export ZSH=.*$/export ZSH=\/root\/.oh-my-zsh/' ~/.zshrc
 
 # Set the default command to run when starting the container
 
