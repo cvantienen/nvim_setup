@@ -33,13 +33,6 @@ RUN npm install -g npm@latest
 # Install Lua Language Server from edge repo
 RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ lua-language-server
 
-# Download and install Nerd Fonts Symbols Only
-RUN mkdir -p ~/.local/share/fonts && \
-    wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.zip && \
-    unzip ~/.local/share/fonts/NerdFontsSymbolsOnly.zip -d ~/.local/share/fonts/NerdFontsSymbolsOnly && \
-    rm ~/.local/share/fonts/NerdFontsSymbolsOnly.zip && \
-    fc-cache -fv
-
 # Install Python packages
 COPY dev_requirements.txt /root/dev_requirements.txt
 RUN pip install --upgrade pip && \
@@ -69,5 +62,22 @@ RUN nvim --headless \
     "+TSInstallSync! vim lua vimdoc markdown json yaml toml html css javascript typescript python" \
     "+sleep 5" \
     "+qa"
+
+
+# Install Hack Nerd Font for icon support
+RUN git clone --depth=1 https://github.com/ryanoasis/nerd-fonts.git /tmp/nerd-fonts && \
+    /tmp/nerd-fonts/install.sh Hack && \
+    rm -rf /tmp/nerd-fonts && \
+    fc-cache -fv
+
+# install ohmy-zsh
+RUN apk add --no-cache zsh && \
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" && \
+    sed -i 's/ZSH_THEME=".*"/ZSH_THEME="agnoster"/' ~/.zshrc && \
+    sed -i 's/plugins=(.*)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc && \
+    sed -i 's/^export ZSH=.*$/export ZSH=\/root\/.oh-my-zsh/' ~/.zshrc
+# Set default shell to zsh
+RUN chsh -s $(which zsh)
+# Set the default command to run when starting the container
 
 CMD ["nvim"]
