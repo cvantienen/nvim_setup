@@ -25,7 +25,8 @@ RUN apk add --no-cache \
     bash \
     github-cli \
     lua5.4 \
-    luarocks
+    luarocks \ 
+    --update
 
 # Install latest npm version
 RUN npm install -g npm@latest
@@ -64,10 +65,16 @@ RUN nvim --headless \
     "+qa"
 
 
-# Install Hack Nerd Font for icon support
-RUN git clone --depth=1 https://github.com/ryanoasis/nerd-fonts.git /tmp/nerd-fonts && \
-    /tmp/nerd-fonts/install.sh Hack && \
-    rm -rf /tmp/nerd-fonts && \
+# Install Hack Nerd Font system-wide for icon support (minimal download)
+RUN mkdir -p /usr/share/fonts/nerd-fonts && \
+    cd /usr/share/fonts/nerd-fonts && \
+    wget https://github.com/ryanoasis/nerd-fonts/raw/master/install.sh && \
+    chmod +x install.sh && \
+    wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip && \
+    unzip Hack.zip -d Hack && \
+    # Move all font files to the parent font directory
+    find Hack -type f -name "*.ttf" -exec mv {} . \; && \
+    rm -rf Hack Hack.zip install.sh && \
     fc-cache -fv
 
 # install ohmy-zsh
@@ -76,6 +83,8 @@ RUN apk add --no-cache zsh && \
     sed -i 's/ZSH_THEME=".*"/ZSH_THEME="agnoster"/' ~/.zshrc && \
     sed -i 's/plugins=(.*)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc && \
     sed -i 's/^export ZSH=.*$/export ZSH=\/root\/.oh-my-zsh/' ~/.zshrc
+
+
 # Set default shell to zsh
 RUN chsh -s $(which zsh)
 # Set the default command to run when starting the container
