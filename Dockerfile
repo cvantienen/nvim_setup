@@ -11,6 +11,7 @@ RUN apk add --no-cache \
     git \
     curl \
     nodejs \
+    xclip \
     npm \
     neovim \
     neovim-doc \
@@ -64,17 +65,13 @@ RUN nvim --headless \
     "+sleep 5" \
     "+qa"
 
-
 # Install Hack Nerd Font system-wide for icon support (minimal download)
 RUN mkdir -p /usr/share/fonts/nerd-fonts && \
     cd /usr/share/fonts/nerd-fonts && \
-    wget https://github.com/ryanoasis/nerd-fonts/raw/master/install.sh && \
-    chmod +x install.sh && \
-    wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip && \
-    unzip Hack.zip -d Hack && \
-    # Move all font files to the parent font directory
+    wget -q https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip && \
+    unzip -q Hack.zip -d Hack && \
     find Hack -type f -name "*.ttf" -exec mv {} . \; && \
-    rm -rf Hack Hack.zip install.sh && \
+    rm -rf Hack Hack.zip && \
     fc-cache -fv
 
 # install ohmy-zsh
