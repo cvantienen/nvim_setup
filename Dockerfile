@@ -56,10 +56,15 @@ RUN mkdir -p /root/.config/nvim && \
 RUN git clone --depth=1 https://github.com/github/copilot.vim.git \
     /root/.config/nvim/pack/github/start/copilot.vim
 
-RUN git clone https://github.com/ryanoasis/nerd-fonts.git && \
-    cd nerd-fonts && \
+RUN apk add --no-cache git fontconfig && \
+    git clone --filter=blob:none --sparse https://github.com/ryanoasis/nerd-fonts.git /tmp/nerd-fonts && \
+    cd /tmp/nerd-fonts && \
+    git sparse-checkout init --cone && \
+    git sparse-checkout set patched-fonts/IBMPlexMono && \
     chmod +x install.sh && \
-    ./install.sh Hack
+    ./install.sh hack && \
+    rm -rf /tmp/nerd-fonts && \
+    fc-cache -fv
 
 # Preinstall Neovim plugins, Mason tools, and Treesitter parsers
 RUN nvim --headless \
