@@ -60,7 +60,7 @@ RUN apk add --no-cache git fontconfig && \
     git clone --filter=blob:none --sparse https://github.com/ryanoasis/nerd-fonts.git /tmp/nerd-fonts && \
     cd /tmp/nerd-fonts && \
     git sparse-checkout init --cone && \
-    git sparse-checkout set patched-fonts/IBMPlexMono && \
+    git sparse-checkout set patched-fonts/hack && \
     chmod +x install.sh && \
     ./install.sh hack && \
     rm -rf /tmp/nerd-fonts && \
