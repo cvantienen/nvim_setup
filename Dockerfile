@@ -56,7 +56,10 @@ RUN mkdir -p /root/.config/nvim && \
 RUN git clone --depth=1 https://github.com/github/copilot.vim.git \
     /root/.config/nvim/pack/github/start/copilot.vim
 
-RUN add --no-cache font-hack-nerd
+RUN git clone https://github.com/ryanoasis/nerd-fonts.git && \
+    cd nerd-fonts && \
+    chmod +x install.sh && \
+    ./install.sh Hack
 
 # Preinstall Neovim plugins, Mason tools, and Treesitter parsers
 RUN nvim --headless \
@@ -66,7 +69,6 @@ RUN nvim --headless \
     "+TSInstallSync! vim lua vimdoc markdown json yaml toml html css javascript typescript python" \
     "+sleep 5" \
     "+qa"
-
 
 # Set the default command to run when starting the container
 
