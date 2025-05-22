@@ -32,12 +32,24 @@ return {
    "nvim-treesitter/nvim-treesitter",
    opts = {
     ensure_installed = {
-      "vim",
-      "lua",
-      "vimdoc",
-      "html",
-      "css",
-      "python",
+      lua-language-server",
+      "stylua",
+      "html-lsp",
+      "css-lsp",
+      "prettier",
+      "black",
+      "ruff",
+      -- Add these for full Python/webdev/docker/Django:
+      "pyright",          -- Python LSP
+      "dockerls",         -- Docker LSP
+      "yamlls",           -- YAML LSP
+      "jsonls",           -- JSON LSP
+      "djlint",           -- Django templates linter/formatter
+      "eslint-lsp",       -- JS/TS linting
+      "tsserver",         -- JS/TS LSP
+      "pylint",           -- Python linter
+      "flake8",           -- Python linter
+      "mypy",             -- Python static typing
       
     },
    },
@@ -55,6 +67,7 @@ return {
     end
   },
     {
+    lazy = false,
     "CopilotC-Nvim/CopilotChat.nvim",
     dependencies = {
       { "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
